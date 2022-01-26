@@ -35,19 +35,31 @@
                     <!-- Collect the nav links, forms, and other content for toggling -->
                     <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
                         <ul class="nav navbar-nav menu_nav ml-auto">
-                            <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li> 
-                            <li class="nav-item"><a class="nav-link" href="about.html">About us</a></li>
-                            <li class="nav-item active"><a class="nav-link" href="accomodation.html">Accomodation</a></li>
-                            <li class="nav-item"><a class="nav-link" href="gallery.html">Gallery</a></li>
-                            <li class="nav-item submenu dropdown">
+                            <li class="nav-item<?php if($page=="") { echo " active";} ?>">
+                                <a class="nav-link" href="/">Home</a>
+                            </li> 
+                            <li class="nav-item<?php if($page=="about") { echo " active";} ?>">
+                                <a class="nav-link" href="about.php">About us</a>
+                            </li>
+                            <li class="nav-item<?php if($page=="accomodation") { echo " active";} ?>">
+                                <a class="nav-link" href="accomodation.php">Accomodation</a>
+                            </li>
+                            <li class="nav-item<?php if($page=="gallery") { echo " active";} ?>">
+                                <a class="nav-link" href="gallery.php">Gallery</a>
+                            </li>
+                            <li class="nav-item submenu dropdown<?php if($page=="blog") { echo " active";} ?>">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Blog</a>
                                 <ul class="dropdown-menu">
                                     <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
                                     <li class="nav-item"><a class="nav-link" href="blog-single.html">Blog Details</a></li>
                                 </ul>
                             </li> 
-                            <li class="nav-item"><a class="nav-link" href="elements.html">Elemests</a></li>
-                            <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="elements.html">Elemests</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="contact.html">Contact</a>
+                            </li>
                         </ul>
                     </div> 
                 </nav>
@@ -60,10 +72,10 @@
             <div class="overlay bg-parallax" data-stellar-ratio="0.8" data-stellar-vertical-offset="0" data-background=""></div>
             <div class="container">
                 <div class="page-cover text-center">
-                    <h2 class="page-cover-tittle">Accomodation</h2>
+                    <h2 class="page-cover-tittle"><?=ucwords($page)?></h2>
                     <ol class="breadcrumb">
                         <li><a href="index.html">Home</a></li>
-                        <li class="active">Accomodation</li>
+                        <li class="active"><?=ucwords($page)?></li>
                     </ol>
                 </div>
             </div>
