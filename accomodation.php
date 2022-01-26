@@ -1,12 +1,8 @@
 <?php
     $page = "accomodation";
     include "./common/top.php";
-<<<<<<< HEAD
 ?>      
-=======
-?>
-        
->>>>>>> 35b4a7c74385ee0069a8bfcdf24ad6a9b707feac
+
         <!--================ Accomodation Area  =================-->
         <section class="accomodation_area section_gap">
             <div class="container">
@@ -16,10 +12,7 @@
                 </div>
                 <div class="row mb_30">
                     <?php
-<<<<<<< HEAD
                         //$rqry = "select * from room order by num desc limit 4";
-=======
->>>>>>> 35b4a7c74385ee0069a8bfcdf24ad6a9b707feac
                         $rqry = "select * from room order by num desc limit 4";
                         $rres = mysqli_query($dbconn, $rqry);
                         while($rrow = mysqli_fetch_array($rres)) {
@@ -28,11 +21,8 @@
                         <div class="accomodation_item text-center">
                             <div class="hotel_img">
                                 <img src="<?=$rrow['img']?>" alt="">
-<<<<<<< HEAD
                                 <a href="javascript:reserve.booking_state('<?=$rrow['num']?>', '', 'booking_select')" class="btn theme_btn button_hover">최저가 예약하기</a>
-=======
                                 <a href="javascript:reserve.booking('<?=$rrow['num']?>', '')" class="btn theme_btn button_hover">Book Now</a>
->>>>>>> 35b4a7c74385ee0069a8bfcdf24ad6a9b707feac
                             </div>
                             <a href="#"><h4 class="sec_h4"><?=$rrow["name"]?></h4></a>
                             <h5><?=won?> 250<small>/night</small></h5>
@@ -305,9 +295,6 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
         <script src="js/stellar.js"></script>
         <script src="vendors/lightbox/simpleLightbox.min.js"></script>
         <script src="js/custom.js"></script>
-<<<<<<< HEAD
         <script type="text/javascript" src="js/total.js"></script>
-=======
->>>>>>> 35b4a7c74385ee0069a8bfcdf24ad6a9b707feac
     </body>
 </html>
