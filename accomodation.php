@@ -2,7 +2,6 @@
     $page = "accomodation";
     include "./common/top.php";
 ?>      
-
         <!--================ Accomodation Area  =================-->
         <section class="accomodation_area section_gap">
             <div class="container">
@@ -12,20 +11,35 @@
                 </div>
                 <div class="row mb_30">
                     <?php
-                        //$rqry = "select * from room order by num desc limit 4";
-                        $rqry = "select * from room order by num desc limit 4";
+                        $rqry = "SELECT MIN(price) AS price, room_type, NAME, img, c.date AS date, cnt
+                            FROM reserve_check AS c
+                            INNER JOIN room AS r
+                            ON r.num = c.room_type
+                            WHERE 1=1
+                            AND r.state = 'Y'
+                            AND c.cnt > 0";
+                        if(date("H") > "18") {
+                            $rqry .= " and c.date >= '".date("Y-m-d", strtotime(date("Y-m-d")." + 1 days"))."'";
+                        } else {
+                            $rqry .= " and c.date >= '".date("Y-m-d")."'";
+                        }
+                        $rqry .= " GROUP BY room_type";
                         $rres = mysqli_query($dbconn, $rqry);
+                        $room_arr = array();
                         while($rrow = mysqli_fetch_array($rres)) {
+
+                            $book_button = ($rrow["cnt"] > 0) ? "최저가 예약하기" : "Sold Out";
+                            $book_css = ($rrow["cnt"] > 0) ? "" : " sold_out";
                     ?>
                     <div class="col-lg-3 col-sm-6">
                         <div class="accomodation_item text-center">
                             <div class="hotel_img">
                                 <img src="<?=$rrow['img']?>" alt="">
-                                <a href="javascript:reserve.booking_state('<?=$rrow['num']?>', '', 'booking_select')" class="btn theme_btn button_hover">최저가 예약하기</a>
-                                <a href="javascript:reserve.booking('<?=$rrow['num']?>', '')" class="btn theme_btn button_hover">Book Now</a>
+                                <a href="javascript:reserve.booking_state('<?=$rrow['room_type']?>', '<?=$rrow['date']?>', 'booking_select', 'html')" class="btn theme_btn button_hover<?=$book_css?>"><?=$book_button?></a>
                             </div>
                             <a href="#"><h4 class="sec_h4"><?=$rrow["name"]?></h4></a>
-                            <h5><?=won?> 250<small>/night</small></h5>
+                            <h5><?=won?> <?=@number_format($rrow["price"])?><small>/night</small></h5>
+                            <h6><?=$rrow["date"]?></h6>
                         </div>
                     </div>
                     <?php
@@ -37,6 +51,7 @@
         <!--================ Accomodation Area  =================-->
         <!--================Booking Tabel Area =================-->
         <section class="hotel_booking_area">
+            <form name="book_form">
             <div class="container">
                 <div class="row hotel_booking_table">
                     <div class="col-md-3">
@@ -49,7 +64,7 @@
                                     <div class="book_tabel_item">
                                         <div class="form-group">
                                             <div class='input-group date' id='datetimepicker11'>
-                                                <input type='text' class="form-control" placeholder="Arrival Date"/>
+                                                <input type='text' class="form-control" placeholder="Arrival Date" name="sdate"/>
                                                 <span class="input-group-addon">
                                                     <i class="fa fa-calendar" aria-hidden="true"></i>
                                                 </span>
@@ -57,7 +72,7 @@
                                         </div>
                                         <div class="form-group">
                                             <div class='input-group date' id='datetimepicker1'>
-                                                <input type='text' class="form-control" placeholder="Departure Date"/>
+                                                <input type='text' class="form-control" placeholder="Departure Date" name="edate"/>
                                                 <span class="input-group-addon">
                                                     <i class="fa fa-calendar" aria-hidden="true"></i>
                                                 </span>
@@ -68,8 +83,8 @@
                                 <div class="col-md-4">
                                     <div class="book_tabel_item">
                                         <div class="input-group">
-                                            <select class="wide">
-                                                <option data-display="Adult">Adult</option>
+                                            <select class="wide" name="room_cnt">
+                                                <option data-display="number of room">number of room</option>
                                                 <?php 
                                                     for($i=1; $i<10; $i++) { 
                                                         echo "<option value='".$i."'>0".$i."</option>";
@@ -77,8 +92,8 @@
                                                 ?>
                                             </select>
                                         </div>
-                                        <div class="input-group">
-                                            <select class="wide">
+                                        <!--<div class="input-group">
+                                            <select class="wide" name="child">
                                                 <option data-display="Child">Child</option>
                                                 <?php 
                                                     for($i=1; $i<10; $i++) { 
@@ -86,20 +101,29 @@
                                                     }
                                                 ?>
                                             </select>
+                                        </div>-->
+                                        <div class="input-group">
+                                            <select class="wide" name="room_type">
+                                                <option data-display="Room Type">Room Type</option>
+                                                <?php
+                                                    $room_qry = "select num, name from room where state = 'Y' order by num asc";
+                                                    $room_res = mysqli_query($dbconn, $room_qry);
+                                                    while($room_row = mysqli_fetch_array($room_res)) {
+                                                ?>
+                                                <option value="<?=$room_row["num"]?>"><?=$room_row["name"]?></option>
+                                                <?php } ?>
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="book_tabel_item">
-                                        <div class="input-group">
-                                            <select class="wide">
-                                                <option data-display="Room Type">Room Type</option>
-                                                <option value="1">Room 01</option>
-                                                <option value="2">Room 02</option>
-                                                <option value="3">Room 03</option>
-                                            </select>
+                                        <div class="form-group">
+                                            <div class='input-group' id=''>
+                                                <input type='text' class="form-control" placeholder="Your name" name="reserve_name"/>
+                                            </div>
                                         </div>
-                                        <a class="book_now_btn button_hover" href="#">Book Now</a>
+                                        <a class="book_now_btn button_hover" href="javascript:reserve.booking();">Book Now</a>
                                     </div>
                                 </div>
                             </div>
@@ -107,6 +131,7 @@
                     </div>
                 </div>
             </div>
+            </form>
         </section>
         <!--================Booking Tabel Area  =================-->
         <!--================ Accomodation Area  =================-->
@@ -201,6 +226,7 @@
             </div>
         </section>
         <!--================ Accomodation Area  =================-->
+        <div id="script"></div>
         <!--================ start footer Area  =================-->	
         <footer class="footer-area section_gap">
             <div class="container">

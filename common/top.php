@@ -54,11 +54,11 @@
                                     <li class="nav-item"><a class="nav-link" href="blog-single.html">Blog Details</a></li>
                                 </ul>
                             </li> 
-                            <li class="nav-item">
-                                <a class="nav-link" href="elements.html">Elemests</a>
+                            <li class="nav-item<?php if($page=="elements") { echo " active";} ?>">
+                                <a class="nav-link" href="elements.php">Elemests</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="contact.html">Contact</a>
+                            <li class="nav-item<?php if($page=="contact") { echo " active";} ?>">
+                                <a class="nav-link" href="contact.php">Contact</a>
                             </li>
                         </ul>
                     </div> 
