@@ -2,6 +2,19 @@
     $page = "accomodation";
     include "./common/top.php";
 ?>      
+    <style type="text/css">
+        .reserve_ment {
+            color:white;display:block;
+        }
+        .reserve_pay {
+            float:right;font-size:2rem;
+        }
+        .datepicker {
+            cursor:pointer;
+        }
+        #ui-datepicker-div {z-index:99;}
+        #reserve_detail { opacity:0;height:0; }
+    </style>
         <!--================ Accomodation Area  =================-->
         <section class="accomodation_area section_gap">
             <div class="container">
@@ -11,7 +24,7 @@
                 </div>
                 <div class="row mb_30">
                     <?php
-                        $rqry = "SELECT MIN(price) AS price, room_type, NAME, img, c.date AS date, cnt
+                        $rqry = "SELECT MIN(price) AS price, room_type, name, img, c.date AS date, cnt, person
                             FROM reserve_check AS c
                             INNER JOIN room AS r
                             ON r.num = c.room_type
@@ -30,6 +43,7 @@
 
                             $book_button = ($rrow["cnt"] > 0) ? "최저가 예약하기" : "Sold Out";
                             $book_css = ($rrow["cnt"] > 0) ? "" : " sold_out";
+                            $person = ($rrow["person"] == 0 || $rrow["person"] == "") ? "" : " (".$rrow["person"]."인)";
                     ?>
                     <div class="col-lg-3 col-sm-6">
                         <div class="accomodation_item text-center">
@@ -37,7 +51,7 @@
                                 <img src="<?=$rrow['img']?>" alt="">
                                 <a href="javascript:reserve.booking_state('<?=$rrow['room_type']?>', '<?=$rrow['date']?>', 'booking_select', 'html')" class="btn theme_btn button_hover<?=$book_css?>"><?=$book_button?></a>
                             </div>
-                            <a href="#"><h4 class="sec_h4"><?=$rrow["name"]?></h4></a>
+                            <a href="#"><h4 class="sec_h4"><?=$rrow["name"].$person?></h4></a>
                             <h5><?=won?> <?=@number_format($rrow["price"])?><small>/night</small></h5>
                             <h6><?=$rrow["date"]?></h6>
                         </div>
@@ -52,6 +66,7 @@
         <!--================Booking Tabel Area =================-->
         <section class="hotel_booking_area">
             <form name="book_form">
+            <input type="hidden" name="mode" value="price">
             <div class="container">
                 <div class="row hotel_booking_table">
                     <div class="col-md-3">
@@ -64,7 +79,7 @@
                                     <div class="book_tabel_item">
                                         <div class="form-group">
                                             <div class='input-group date' id='datetimepicker11'>
-                                                <input type='text' class="form-control" placeholder="Arrival Date" name="sdate"/>
+                                                <input type='text' class="form-control datepicker" placeholder="Arrival Date" name="sdate" onchange="reserve.booking('','','select')"/>
                                                 <span class="input-group-addon">
                                                     <i class="fa fa-calendar" aria-hidden="true"></i>
                                                 </span>
@@ -72,7 +87,7 @@
                                         </div>
                                         <div class="form-group">
                                             <div class='input-group date' id='datetimepicker1'>
-                                                <input type='text' class="form-control" placeholder="Departure Date" name="edate"/>
+                                                <input type='text' class="form-control datepicker" placeholder="Departure Date" name="edate" onchange="reserve.booking('','','select')"/>
                                                 <span class="input-group-addon">
                                                     <i class="fa fa-calendar" aria-hidden="true"></i>
                                                 </span>
@@ -118,12 +133,73 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="book_tabel_item">
+                                        <a id="book_now" class="book_now_btn button_hover" href="javascript:reserve.booking();">Book Now</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row hotel_booking_table" id="reserve_detail">
+                    <div class="col-md-3">
+                        
+                    </div>
+                    <div class="col-md-9">
+                        <div class="boking_table">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="book_tabel_item">
                                         <div class="form-group">
                                             <div class='input-group' id=''>
-                                                <input type='text' class="form-control" placeholder="Your name" name="reserve_name"/>
+                                                <input type='text' class="form-control" placeholder="Booker" name="reserve_name"/>
                                             </div>
                                         </div>
-                                        <a class="book_now_btn button_hover" href="javascript:reserve.booking();">Book Now</a>
+                                        <div class="form-group">
+                                            <div class='input-group' id=''>
+                                                <input type='text' class="form-control" placeholder="Phone Number" name="phone"/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class='input-group' id=''>
+                                                <input type='text' class="form-control" placeholder="Password" name="password"/>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="book_tabel_item">
+                                        <div class="form-group">
+                                            <div class='input-group reserve_ment' id=''>
+                                                <?php
+                                                    switch(date("w", date("Y-m-d"))) {
+                                                        case 5:
+                                                            $show_date = date("Y-m-d", strtotime(date("Y-m-d")." + 3days"));
+                                                        break;
+                                                        case 6:
+                                                            $show_date = date("Y-m-d", strtotime(date("Y-m-d")." + 2days"));
+                                                        break;
+                                                        default;
+                                                            $show_date = date("Y-m-d", strtotime(date("Y-m-d")." + 1days"));
+                                                        break;
+                                                    }
+                                                ?>
+                                                <p>
+                                                    익일 영업일까지(<?=date("Y-m-d", strtotime(date("Y-m-d")." + 1days"))?> 18:00 PM) 미입금시 예약이 취소 될 수 있으며, 
+                                                    <br>명절 및 휴일은 확인이 지연 될 수 있습니다.
+                                                    <br><br>
+                                                    xx은행 : 입금자 이준혁
+                                                </p>
+                                                
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class='input-group reserve_ment'>
+                                                <p class="reserve_pay">
+                                                   <?=won?> <b>1000</b>
+                                                </p>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -138,10 +214,17 @@
         <section class="accomodation_area section_gap">
             <div class="container">
                 <div class="section_title text-center">
+                    <?php
+                    //객실수 많은애들부터 털기
+
+                    ?>
                     <h2 class="title_color">Normal Accomodation</h2>
                     <p>We all live in an age that belongs to the young at heart. Life that is becoming extremely fast,</p>
                 </div>
                 <div class="row accomodation_two">
+                    <?php
+                        $qry = "select * from reserve_check where 1=1";
+                    ?>
                     <div class="col-lg-3 col-sm-6">
                         <div class="accomodation_item text-center">
                             <div class="hotel_img">
@@ -227,6 +310,34 @@
         </section>
         <!--================ Accomodation Area  =================-->
         <div id="script"></div>
+        <style type="text/css">
+            #reserve_div {
+                position:fixed;
+                top:10rem;
+                border:1px solid black;
+                width:50rem;
+                height:30rem;
+                left:50%;
+                margin-left:-20%;
+                background-color:white;
+                z-index:999;
+                padding:10px;
+                display: none;
+            }
+            .reserve_close { 
+                float:right;
+                font-size:30px;
+            }
+        </style>
+        <div id="reserve_div">
+            <a class="reserve_close" href="javascript:reserve.reserve_close();">X</a>
+            <table> 
+                <tr>
+                    <td></td>
+                </tr>
+            </table>
+            
+        </div>
         <!--================ start footer Area  =================-->	
         <footer class="footer-area section_gap">
             <div class="container">
@@ -310,7 +421,9 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
         
         <!-- Optional JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-        <script src="js/jquery-3.2.1.min.js"></script>
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="js/jquery-ui.js"></script>
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
         <script src="js/popper.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="vendors/owl-carousel/owl.carousel.min.js"></script>
