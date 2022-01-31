@@ -79,7 +79,7 @@
                                     <div class="book_tabel_item">
                                         <div class="form-group">
                                             <div class='input-group date' id='datetimepicker11'>
-                                                <input type='text' class="form-control datepicker" placeholder="Arrival Date" name="sdate" onchange="reserve.booking('','','select')"/>
+                                                <input type='text' class="form-control datepicker" placeholder="Arrival Date" name="sdate" onchange="reserve.booking_form('book_form','html')"/>
                                                 <span class="input-group-addon">
                                                     <i class="fa fa-calendar" aria-hidden="true"></i>
                                                 </span>
@@ -87,7 +87,7 @@
                                         </div>
                                         <div class="form-group">
                                             <div class='input-group date' id='datetimepicker1'>
-                                                <input type='text' class="form-control datepicker" placeholder="Departure Date" name="edate" onchange="reserve.booking('','','select')"/>
+                                                <input type='text' class="form-control datepicker" placeholder="Departure Date" name="edate" onchange="reserve.booking_form('book_form','html')"/>
                                                 <span class="input-group-addon">
                                                     <i class="fa fa-calendar" aria-hidden="true"></i>
                                                 </span>
@@ -98,8 +98,8 @@
                                 <div class="col-md-4">
                                     <div class="book_tabel_item">
                                         <div class="input-group">
-                                            <select class="wide" name="room_cnt">
-                                                <option data-display="number of room">number of room</option>
+                                            <select class="wide" name="room_cnt" onchange="reserve.booking_form('book_form','html')">
+                                                <option data-display="number of room" value="0">number of room</option>
                                                 <?php 
                                                     for($i=1; $i<10; $i++) { 
                                                         echo "<option value='".$i."'>0".$i."</option>";
@@ -118,8 +118,8 @@
                                             </select>
                                         </div>-->
                                         <div class="input-group">
-                                            <select class="wide" name="room_type">
-                                                <option data-display="Room Type">Room Type</option>
+                                            <select class="wide" name="room_type" onchange="reserve.booking_form('book_form','html')">
+                                                <option data-display="Room Type" value="">Room Type</option>
                                                 <?php
                                                     $room_qry = "select num, name from room where state = 'Y' order by num asc";
                                                     $room_res = mysqli_query($dbconn, $room_qry);
@@ -161,7 +161,7 @@
                                         </div>
                                         <div class="form-group">
                                             <div class='input-group' id=''>
-                                                <input type='text' class="form-control" placeholder="Password" name="password"/>
+                                                <input type='password' class="form-control" placeholder="Password" name="password" maxlength="20" />
                                             </div>
                                         </div>
                                         
