@@ -1,25 +1,21 @@
 var reserve = {
 	booking : function(num, date, mode) {
-		$("#reserve_detail").animate({
-			opacity:1,
-			height:"100%"
-		});
 		if($("#reserve_detail").hasClass("on") && mode != "select") {
 			if($("input[name='sdate']").val() == "") {
-				alert("투숙일을 확인해 주세요");
+				alert("투숙일을 확인해 주세요.");
 				$("input[name='sdate']").focus();
 				return false;
 			}
 			if($("select[name='room_cnt']").val() == "" || $("select[name='room_cnt']").val() == 0) {
-				alert("객실 수를 확인해 주세요");
+				alert("객실 수를 확인해 주세요.");
 				return false;
 			}
-			if($("select[name='room_cnt']").val() == "") {
-				alert("객실 타입을 확인해 주세요");
+			if($("select[name='room_type']").val() == "") {
+				alert("객실 타입을 확인해 주세요.");
 				return false;
 			}
 			if($("input[name='reserve_name']").val() == "") {
-				alert("예약자명을 입력해주세요");
+				alert("예약자명을 입력해주세요.");
 				$("input[name='reserve_name']").focus();
 				return false;
 			}
@@ -33,21 +29,33 @@ var reserve = {
 				$("input[name='password']").focus();
 				return false;
 			}
+			$("input[name='mode']").val("reserve_submit");
+			reserve.booking_form("book_form", "html");
+
 
 		} else {
-			$("#reserve_detail").addClass("on");
-			reserve.booking_form("price", "book_form", "html");
-		}
-	},
-	reserve_check : function(num, date) {
-		$.ajax({
-			type : "POST",
-			data : {"mode":"reserve_check", "num":num, "date":date},
-			url  : "state.php",
-			success : function(e) {
-				alert(e);
+			if($("input[name='sdate']").val() == "") {
+				alert("투숙일을 선택해주세요.");
+				$("input[name='sdate']").focus();
+				return;
+			} else if($("select[name='room_type']").val() == "") {
+				alert("객실 타입을 선택해주세요.");
+				return;
+			} else if($("select[name='room_cnt']").val() == "" || $("select[name='room_cnt']").val() == 0) {
+				alert("객실 수를 확인해 주세요.");
+				return;
+			} else {
+				$("#reserve_detail").animate({
+					opacity:1,
+					height:"100%"
+				});
+				$("#reserve_detail").addClass("on");
+				reserve.booking_form("book_form", "html");
+				$("html body").animate({
+					scrollTop : $("form[name='book_form']").offset().top
+				},400)
 			}
-		})
+		}
 	},
 	booking_state : function(num, date, mode, type) {
 		$.ajax({
@@ -66,7 +74,7 @@ var reserve = {
 			}
 		})
 	},
-	booking_form : function(mode, form, type) {
+	booking_form : function(form, type) {
 		$.ajax({
 			type : "POST",
 			data : $("form[name='"+form+"']").serialize(),
@@ -76,11 +84,21 @@ var reserve = {
 					case "html":
 						$("#script").html(e);
 					break;
+					case "reserve_check":
+						$("#reserve_check").html(e);
+						setTimeout(function() {
+							$("html body").animate({
+								scrollTop : $("#reserve_check").offset().top
+							},400)
+						},1000)
+					break;
 				}
 			}
 		})
-	},
-	reserve_close: function() {
-		$("#reserve_div").hide();
 	}
 }
+$(document).ready(function(){
+  $("input:text[numberOnly]").on("keyup", function() {
+      $(this).val($(this).val().replace(/[^0-9]/g,""));
+  });
+})

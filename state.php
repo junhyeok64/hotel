@@ -4,22 +4,6 @@
 		$$key = $value;
 	}
 	switch($mode) {
-		case "reserve_check":
-			$cnt = ($cnt == "") ? 0 : $cnt;
-			$qry = "select * from reserve_check where 1=1 ";
-			$qry .= "and room_type = '".$num."' ";
-			$qry .= "and date = '".$date."' ";
-			$qry .= "and cnt >= '".$cnt."'";
-
-			$res = mysqli_query($dbconn, $qry);
-			$row = mysqli_num_rows($res);
-			if($row>0) {
-				$row = mysqli_fetch_array($res);
-				echo "SUCC||".$row["cnt"];
-			} else {
-				echo "FAIL||";
-			}
-		break;
 		case "booking_select":	//상품 클릭시 예약폼 자동완성
 			$qry = "select * from reserve_check where 1=1 ";
 			$qry .= " and room_type = '".$num."'";
@@ -86,14 +70,16 @@
 				//객실수량 다시한번 체크//reserve function 하나 파서 객실수량 체크 해야될듯 넘 자주함
 				$room_chk = $reserve->room_check($room_cnt, $room_type, $sdate, $edate);
 				if($room_chk["mode"] == "SUCC") {
-					$qry = "insert into reserve (room_type, room_cnt, reserve_name, phone, password, sdate, edate, reserve_time, userip, state) values";
-					$qry .= "('".$room_type."','".$room_cnt."','".$reserve_name."','".$phone."','".$password."','".$sdate."','".$edate."',now(),'".$_SERVER["REMOTE_ADDR"]."','Y')";
-					$res = mysqli_query($dbconn, $qry);
+					$_data = array("room_type", "room_cnt", "reserve_name", "phone", "password", "sdate", "edate");
+					$data = array();
+					for($ac=0; $ac<count($_data); $ac++) {
+						$data[$_data[$ac]] = ${$_data[$ac]};
+					}
+					$res = $reserve->room_insert($data);
 					if($res) {
-						$up_qry = "";
-
 						$out = "alert('예약처리 되었습니다.');";
-						$out .= "$(\"input[name='mode']\").val(\"price\");";
+						//$out .= "$(\"input[name='mode']\").val(\"price\");";
+						$out .= "location.reload();";
 					} else {
 						$out = "alert('잠시 후 다시 시도해주세요.');";
 					}
@@ -104,6 +90,45 @@
 			echo "<script type=\"text/javascript\">";
 			echo $out;
 			echo "</script>";
+		break;
+		case "reserve_check":
+			$out = "";
+
+			$qry = "select * from reserve where 1=1 ";
+			$qry .= " and reserve_name = '".$reserve_name."'";
+			$qry .= " and phone = '".$phone."'";
+			$qry .= " and password = '".$password."'";
+			$res = mysqli_query($dbconn, $qry);
+			$cnt = @mysqli_num_rows($res);
+			if($cnt > 0) {
+				while($row = mysqli_fetch_array($res)) {
+					$rqry = "select * from room where num = '".$row["room_type"]."'";
+					$rres = mysqli_query($dbconn, $rqry);
+					$rrow = mysqli_fetch_array($rres);
+
+					switch($row["state"]) {
+						case "":
+						default:
+							$state = "확인하기";
+						break;
+					}
+
+					$out .= "
+					<div class=\"col-lg-3 col-sm-6\">
+                        <div class=\"accomodation_item text-center\">
+                            <div class=\"hotel_img\">
+                                <img src=\"".$rrow['img']."\" alt=\"\">
+                                <a href=\"\" class=\"btn theme_btn button_hover\">".$state."</a>
+                            </div>
+                            <a href=\"#\"><h4 class=\"sec_h4\">".$rrow["name"]."</h4></a>
+                            <h5>".won." <small>/night</small></h5>
+                            <h6>".date("Y-m-d", strtotime($row["sdate"]))."</h6>
+                        </div>
+                    </div>
+					";
+				}
+				echo $out;
+			}
 		break;
 	}
 ?>

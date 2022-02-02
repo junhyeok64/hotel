@@ -163,6 +163,10 @@ button:focus {
 
 /*---------------------------------------------------- */
 /*----------------------------------------------------*/
+.sold_out {
+  color: #fff;
+  background: #gray;
+}
 .theme_btn {
   font-size: 14px;
   line-height: 30px;

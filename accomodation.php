@@ -2,19 +2,6 @@
     $page = "accomodation";
     include "./common/top.php";
 ?>      
-    <style type="text/css">
-        .reserve_ment {
-            color:white;display:block;
-        }
-        .reserve_pay {
-            float:right;font-size:2rem;
-        }
-        .datepicker {
-            cursor:pointer;
-        }
-        #ui-datepicker-div {z-index:99;}
-        #reserve_detail { opacity:0;height:0; }
-    </style>
         <!--================ Accomodation Area  =================-->
         <section class="accomodation_area section_gap">
             <div class="container">
@@ -156,7 +143,7 @@
                                         </div>
                                         <div class="form-group">
                                             <div class='input-group' id=''>
-                                                <input type='text' class="form-control" placeholder="Phone Number" name="phone"/>
+                                                <input type='text' class="form-control" placeholder="Phone Number" name="phone" numberOnly maxlength="11" />
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -310,34 +297,6 @@
         </section>
         <!--================ Accomodation Area  =================-->
         <div id="script"></div>
-        <style type="text/css">
-            #reserve_div {
-                position:fixed;
-                top:10rem;
-                border:1px solid black;
-                width:50rem;
-                height:30rem;
-                left:50%;
-                margin-left:-20%;
-                background-color:white;
-                z-index:999;
-                padding:10px;
-                display: none;
-            }
-            .reserve_close { 
-                float:right;
-                font-size:30px;
-            }
-        </style>
-        <div id="reserve_div">
-            <a class="reserve_close" href="javascript:reserve.reserve_close();">X</a>
-            <table> 
-                <tr>
-                    <td></td>
-                </tr>
-            </table>
-            
-        </div>
         <!--================ start footer Area  =================-->	
         <footer class="footer-area section_gap">
             <div class="container">

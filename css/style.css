@@ -163,6 +163,7 @@ button:focus {
 
 /*---------------------------------------------------- */
 /*----------------------------------------------------*/
+
 .theme_btn {
   font-size: 14px;
   line-height: 30px;
@@ -171,6 +172,11 @@ button:focus {
   font-weight: 600;
   background: #f3c300;
   padding: 5px 30px;
+}
+
+.sold_out {
+  color: #fff;
+  background: gray;
 }
 
 .theme_btn:before {
@@ -781,7 +787,8 @@ button:focus {
   -webkit-transform: translate(-50%);
   -ms-transform: translate(-50%);
   transform: translate(-50%);
-  padding: 5px 25px;
+  /*padding: 5px 25px;*/
+  padding: 5px 10px;
   max-width: 128px;
 }
 
@@ -795,6 +802,13 @@ button:focus {
   font-size: 24px;
   line-height: 28px;
   color: #52c5fd;
+  font-weight: 600;
+  margin-bottom: 0px;
+}
+.accomodation_item h6 {
+  font-size: 14px;
+  line-height: 1.5rem;
+  color: #0272A8;
   font-weight: 600;
   margin-bottom: 0px;
 }
@@ -3602,3 +3616,18 @@ h1, h2, h3, h4, h5, h6 {
 /*---------------------------------------------------- */
 
 /*# sourceMappingURL=style.css.map */
+
+/*accomodation*/
+.reserve_ment {
+    color:white;display:block;
+}
+.reserve_pay {
+    float:right;font-size:2rem;
+}
+.datepicker {
+    cursor:pointer;
+}
+#ui-datepicker-div {z-index:99;}
+#reserve_detail { opacity:0;height:0; }
+
+.pb-10 {padding-bottom:10rem;}
