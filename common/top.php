@@ -1,5 +1,6 @@
 <?php
     include "../config/hotel_config.php";
+    //theme link : https://themewagon.com/themes/free-bootstrap-hotel-template-royal/
 ?>
 <!doctype html>
 <html lang="en">
@@ -41,11 +42,11 @@
                             <li class="nav-item<?php if($page=="about") { echo " active";} ?>">
                                 <a class="nav-link" href="about.php">About us</a>
                             </li>
-                            <li class="nav-item<?php if($page=="accomodation") { echo " active";} ?>">
-                                <a class="nav-link" href="reserve.php">Accomodation</a>
-                            </li>
                             <li class="nav-item<?php if($page=="gallery") { echo " active";} ?>">
                                 <a class="nav-link" href="gallery.php">Gallery</a>
+                            </li>
+                            <li class="nav-item<?php if($page=="reserve") { echo " active";} ?>">
+                                <a class="nav-link" href="reserve.php">Reserve</a>
                             </li>
                             <!--<li class="nav-item submenu dropdown<?php if($page=="blog") { echo " active";} ?>">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Blog</a>

@@ -92,15 +92,16 @@ var reserve = {
 					break;
 					case "reserve_check":
 						$("#reserve_check").html(e);
-						setTimeout(function() {
-							$("html body").animate({
-								scrollTop : $("#reserve_check").offset().top
-							},400)
-						},1000)
 					break;
 				}
 			}
 		})
+	},
+	renewsletter : function() {
+		if(confirm("메일 수신을 거부한 주소입니다. 다시 구독하겠습니까?")) {
+			$("input[name='re']").val("Y");
+			reserve.booking_form('newsletter', 'html');
+		}
 	}
 }
 $(document).ready(function(){

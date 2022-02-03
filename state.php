@@ -113,7 +113,8 @@
 					$rqry = "select * from room where num = '".$row["room_type"]."'";
 					$rres = mysqli_query($dbconn, $rqry);
 					$rrow = mysqli_fetch_array($rres);
-					$css = "";
+					$css = $link = "";
+					$link = "javascript:;";
 
 					switch($row["state"]) {
 						case "Y"://예약시도
@@ -124,6 +125,11 @@
 						break;
 						case "S":
 							$state = "예약확정";
+							if(date("Y-m-d", strtotime($row["edate"])) > date("Y-m-d")) {
+								$state = "리뷰작성";
+								$css = " success";
+								$link = "javascript:;";
+							}
 						break;
 						case "C":
 							$state = "예약최소";
@@ -146,9 +152,9 @@
                         <div class=\"accomodation_item text-center\">
                             <div class=\"hotel_img\">
                                 <img src=\"".$rrow['img']."\" alt=\"\">
-                                <a href=\"javascript:;\" class=\"btn theme_btn button_hover".$css."\">".$state."</a>
+                                <a href=\"".$link."\" class=\"btn theme_btn button_hover".$css."\">".$state."</a>
                             </div>
-                            <a href=\"#\"><h4 class=\"sec_h4\">".$rrow["name"]."".$cnt."</h4></a>
+                            <a href=\"".$link."\"><h4 class=\"sec_h4\">".$rrow["name"]."".$cnt."</h4></a>
                             <h5>".won." ".$price." <small>/ ".$night." night</small></h5>
                             <h6>".date("Y-m-d", strtotime($row["sdate"]))." ~ ".date("Y-m-d", strtotime($row["edate"]))."</h6>
                         </div>
@@ -158,11 +164,56 @@
 			} else {
 				$out = "
 					<div class=\"col-lg-12\">
-                        <div class=\"accomodation_item text-center\">
+                        <div class=\"accomodation_item text-center\" style=\"margin-bottom:10rem;\">
                             <h5>일치하는 예약건이 없습니다</h5>
+                            <h5 style='padding-top:5px;'><a href=\"javascript:location.href='".base_url."/reserve.php';\">다른객실 살펴보기</a></h5>
                         </div>
                     </div>";
 			}
+			$out .= "<script type=\"text/javascript\">";
+			$out .= "
+			$(document).ready(function(){
+				$('html, body').animate({scrollTop: $(\"#reserve_check\").offset().top-300}, 400);
+			})
+			";
+			$out .= "</script>";
+			echo $out;
+		break;
+		case "newsletter"://푸터 뉴스레터받기
+			$out = "<script type=\"text/javascript\">";
+			if($email != "") {
+				$sel_qry = " select * from news where 1=1 ";
+				$sel_qry .= " and email = '".$email."'";
+				$sel_res = mysqli_query($dbconn, $sel_qry);
+				$sel_row = @mysqli_fetch_array($sel_res);
+				if($sel_row["email"] != "") {
+					if($sel_row["state"] == "Y") {
+						$out .= "alert('이미 등록된 메일입니다.');";
+					} else {
+						if($re == "Y") {
+							$up_qry = "update news set state = 'Y', udate = now() where email = '".$email."'";
+							$up_res = mysqli_query($dbconn, $up_qry);
+							if($up_res) {
+								$out .= "alert('재구독완료');";
+								$out .= "$(\"input[name='re']\").val('');";
+							} else {
+								$out .= "alert('잠시 후 다시 시도해주세요');";
+							}
+
+						} else {
+							$out .= "reserve.renewsletter();";
+						}
+					}
+				} else {
+					$in_qry = "insert into news (email, wdate, state) values ";
+					$in_qry .= "('".$email."', now(), 'Y')";
+					$in_res = mysqli_query($dbconn, $in_qry);
+					if($in_res) {
+						$out .= "alert('구독완료');";
+					}
+				}
+			}
+			$out .= "</script>";
 			echo $out;
 		break;
 	}

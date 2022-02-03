@@ -1,5 +1,5 @@
 <?php
-    $page = "accomodation";
+    $page = "reserve";
     include "./common/top.php";
 ?>      
         <!--================ Accomodation Area  =================-->

@@ -99,7 +99,7 @@
                         <div class="about_content ">
                             <h2 class="title title_color">About Us <br>Our History<br>Mission & Vision</h2>
                             <p>inappropriate behavior is often laughed off as “boys will be boys,” women face higher conduct standards especially in the workplace. That’s why it’s crucial that, as women, our behavior on the job is beyond reproach. inappropriate behavior is often laughed.</p>
-                            <a href="#" class="button_hover theme_btn_two">Request Custom Price</a>
+                            <a href="javascript:;" class="button_hover theme_btn_two">Request Custom Price</a>
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -122,13 +122,13 @@
                         <img class="rounded-circle" src="image/testtimonial-1.jpg" alt="">
                         <div class="media-body">
                             <p>As conscious traveling Paupers we must always be concerned about our dear Mother Earth. If you think about it, you travel across her face, and She is the </p>
-                            <a href="#"><h4 class="sec_h4">Fanny Spencer</h4></a>
+                            <a href="javascript:;"><h4 class="sec_h4">Fanny Spencer</h4></a>
                             <div class="star">
-                                <a href="#"><i class="fa fa-star"></i></a>
-                                <a href="#"><i class="fa fa-star"></i></a>
-                                <a href="#"><i class="fa fa-star"></i></a>
-                                <a href="#"><i class="fa fa-star"></i></a>
-                                <a href="#"><i class="fa fa-star-half-o"></i></a>
+                                <a href="javascript:;"><i class="fa fa-star"></i></a>
+                                <a href="javascript:;"><i class="fa fa-star"></i></a>
+                                <a href="javascript:;"><i class="fa fa-star"></i></a>
+                                <a href="javascript:;"><i class="fa fa-star"></i></a>
+                                <a href="javascript:;"><i class="fa fa-star-half-o"></i></a>
                             </div>
                         </div>
                     </div>    
@@ -136,13 +136,13 @@
                         <img class="rounded-circle" src="image/testtimonial-1.jpg" alt="">
                         <div class="media-body">
                             <p>As conscious traveling Paupers we must always be concerned about our dear Mother Earth. If you think about it, you travel across her face, and She is the </p>
-                            <a href="#"><h4 class="sec_h4">Fanny Spencer</h4></a>
+                            <a href="javascript:;"><h4 class="sec_h4">Fanny Spencer</h4></a>
                             <div class="star">
-                                <a href="#"><i class="fa fa-star"></i></a>
-                                <a href="#"><i class="fa fa-star"></i></a>
-                                <a href="#"><i class="fa fa-star"></i></a>
-                                <a href="#"><i class="fa fa-star"></i></a>
-                                <a href="#"><i class="fa fa-star-half-o"></i></a>
+                                <a href="javascript:;"><i class="fa fa-star"></i></a>
+                                <a href="javascript:;"><i class="fa fa-star"></i></a>
+                                <a href="javascript:;"><i class="fa fa-star"></i></a>
+                                <a href="javascript:;"><i class="fa fa-star"></i></a>
+                                <a href="javascript:;"><i class="fa fa-star-half-o"></i></a>
                             </div>
                         </div>
                     </div>
@@ -150,13 +150,13 @@
                         <img class="rounded-circle" src="image/testtimonial-1.jpg" alt="">
                         <div class="media-body">
                             <p>As conscious traveling Paupers we must always be concerned about our dear Mother Earth. If you think about it, you travel across her face, and She is the </p>
-                            <a href="#"><h4 class="sec_h4">Fanny Spencer</h4></a>
+                            <a href="javascript:;"><h4 class="sec_h4">Fanny Spencer</h4></a>
                             <div class="star">
-                                <a href="#"><i class="fa fa-star"></i></a>
-                                <a href="#"><i class="fa fa-star"></i></a>
-                                <a href="#"><i class="fa fa-star"></i></a>
-                                <a href="#"><i class="fa fa-star"></i></a>
-                                <a href="#"><i class="fa fa-star-half-o"></i></a>
+                                <a href="javascript:;"><i class="fa fa-star"></i></a>
+                                <a href="javascript:;"><i class="fa fa-star"></i></a>
+                                <a href="javascript:;"><i class="fa fa-star"></i></a>
+                                <a href="javascript:;"><i class="fa fa-star"></i></a>
+                                <a href="javascript:;"><i class="fa fa-star-half-o"></i></a>
                             </div>
                         </div>
                     </div>    
@@ -164,13 +164,13 @@
                         <img class="rounded-circle" src="image/testtimonial-1.jpg" alt="">
                         <div class="media-body">
                             <p>As conscious traveling Paupers we must always be concerned about our dear Mother Earth. If you think about it, you travel across her face, and She is the </p>
-                            <a href="#"><h4 class="sec_h4">Fanny Spencer</h4></a>
+                            <a href="javascript:;"><h4 class="sec_h4">Fanny Spencer</h4></a>
                             <div class="star">
-                                <a href="#"><i class="fa fa-star"></i></a>
-                                <a href="#"><i class="fa fa-star"></i></a>
-                                <a href="#"><i class="fa fa-star"></i></a>
-                                <a href="#"><i class="fa fa-star"></i></a>
-                                <a href="#"><i class="fa fa-star-half-o"></i></a>
+                                <a href="javascript:;"><i class="fa fa-star"></i></a>
+                                <a href="javascript:;"><i class="fa fa-star"></i></a>
+                                <a href="javascript:;"><i class="fa fa-star"></i></a>
+                                <a href="javascript:;"><i class="fa fa-star"></i></a>
+                                <a href="javascript:;"><i class="fa fa-star-half-o"></i></a>
                             </div>
                         </div>
                     </div>
@@ -194,10 +194,10 @@
                             </div>
                             <div class="details">
                                 <div class="tags">
-                                    <a href="#" class="button_hover tag_btn">Travel</a>
-                                    <a href="#" class="button_hover tag_btn">Life Style</a>
+                                    <a href="javascript:;" class="button_hover tag_btn">Travel</a>
+                                    <a href="javascript:;" class="button_hover tag_btn">Life Style</a>
                                 </div>
-                                <a href="#"><h4 class="sec_h4">Low Cost Advertising</h4></a>
+                                <a href="javascript:;"><h4 class="sec_h4">Low Cost Advertising</h4></a>
                                 <p>Acres of Diamonds… you’ve read the famous story, or at least had it related to you. A farmer.</p>
                                 <h6 class="date title_color">31st January,2018</h6>
                             </div>	
@@ -210,10 +210,10 @@
                             </div>
                             <div class="details">
                                 <div class="tags">
-                                    <a href="#" class="button_hover tag_btn">Travel</a>
-                                    <a href="#" class="button_hover tag_btn">Life Style</a>
+                                    <a href="javascript:;" class="button_hover tag_btn">Travel</a>
+                                    <a href="javascript:;" class="button_hover tag_btn">Life Style</a>
                                 </div>
-                                <a href="#"><h4 class="sec_h4">Creative Outdoor Ads</h4></a>
+                                <a href="javascript:;"><h4 class="sec_h4">Creative Outdoor Ads</h4></a>
                                 <p>Self-doubt and fear interfere with our ability to achieve or set goals. Self-doubt and fear are</p>
                                 <h6 class="date title_color">31st January,2018</h6>
                             </div>	
@@ -226,10 +226,10 @@
                             </div>
                             <div class="details">
                                 <div class="tags">
-                                    <a href="#" class="button_hover tag_btn">Travel</a>
-                                    <a href="#" class="button_hover tag_btn">Life Style</a>
+                                    <a href="javascript:;" class="button_hover tag_btn">Travel</a>
+                                    <a href="javascript:;" class="button_hover tag_btn">Life Style</a>
                                 </div>
-                                <a href="#"><h4 class="sec_h4">It S Classified How To Utilize Free</h4></a>
+                                <a href="javascript:;"><h4 class="sec_h4">It S Classified How To Utilize Free</h4></a>
                                 <p>Why do you want to motivate yourself? Actually, just answering that question fully can </p>
                                 <h6 class="date title_color">31st January,2018</h6>
                             </div>	

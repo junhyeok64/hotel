@@ -15,20 +15,18 @@
                             <div class="row">
                                 <div class="col-4">
                                     <ul class="list_style">
-                                        <li><a href="#">Home</a></li>
-                                        <li><a href="#">Feature</a></li>
-                                        <li><a href="#">Services</a></li>
-                                        <li><a href="#">Portfolio</a></li>
+                                        <li><a href="<?=base_url?>">Home</a></li>
+                                        <li><a href="<?=base_url?>/about.php">About</a></li>
+                                        <li><a href="<?=base_url?>/gallery.php">Gallery</a></li>                                       
                                     </ul>
                                 </div>
                                 <div class="col-4">
                                     <ul class="list_style">
-                                        <li><a href="#">Team</a></li>
-                                        <li><a href="#">Pricing</a></li>
-                                        <li><a href="#">Blog</a></li>
-                                        <li><a href="#">Contact</a></li>
+                                        <li><a href="<?=base_url?>/reserve.php">Reserve</a></li>
+                                        <li><a href="<?=base_url?>/mypage.php">Mypage</a></li>
+                                        <li><a href="<?=base_url?>/contact.php">Contact</a></li>
                                     </ul>
-                                </div>										
+                                </div>
                             </div>							
                         </div>
                     </div>							
@@ -36,11 +34,13 @@
                         <div class="single-footer-widget">
                             <h6 class="footer_title">Newsletter</h6>
                             <p>For business professionals caught between high OEM price and mediocre print and graphic output, </p>		
-                            <div id="mc_embed_signup">
-                                <form target="_blank" action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01" method="get" class="subscribe_form relative">
+                            <div id="">
+                                <form method="post" name="newsletter" class="subscribe_form relative">
+                                    <input type="hidden" name="mode" value="newsletter">
+                                    <input type="hidden" name="re" value="">
                                     <div class="input-group d-flex flex-row">
-                                        <input name="EMAIL" placeholder="Email Address" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email Address '" required="" type="email">
-                                        <button class="btn sub-btn"><span class="lnr lnr-location"></span></button>		
+                                        <input name="email" placeholder="Email Address" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email Address '" required="" type="email">
+                                        <button type="button" onclick="javascript:reserve.booking_form('newsletter', 'html')"  class="btn sub-btn"><span class="lnr lnr-location"></span></button>		
                                     </div>									
                                     <div class="mt-10 info"></div>
                                 </form>
@@ -88,7 +88,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
         <script src="js/popper.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="vendors/owl-carousel/owl.carousel.min.js"></script>
-        <script src="js/jquery.ajaxchimp.min.js"></script>
+        <!--<script src="js/jquery.ajaxchimp.min.js"></script>-->
         <script src="vendors/bootstrap-datepicker/bootstrap-datetimepicker.min.js"></script>
         <script src="vendors/nice-select/js/jquery.nice-select.js"></script>
         <?php
