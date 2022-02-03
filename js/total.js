@@ -1,4 +1,10 @@
 var reserve = {
+	booking_index : function() {
+		$("input[name='sdate']").focus();
+		$("html body").animate({
+			scrollTop : $("form[name='book_form']").offset().top
+		},400)
+	},
 	booking : function(num, date, mode) {
 		if($("#reserve_detail").hasClass("on") && mode != "select") {
 			if($("input[name='sdate']").val() == "") {

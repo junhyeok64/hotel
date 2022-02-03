@@ -23,8 +23,8 @@
 				echo "$(\"select[name='room_cnt']\").val('1').prop('selected', true);";
 				//echo "$(\"select[name='child']\").val('0').prop('selected', true);";
 				//echo "$(\"select[name='room_type']\").niceSelect();";
-				echo "$('.current').eq(0).html('01');";
-				echo "$('.current').eq(1).html('".$room_row["name"]."');";
+				echo "$('.current').eq(1).html('01');";
+				echo "$('.current').eq(0).html('".$room_row["name"]."');";
 				echo "$(\"input[name='reserve_name']\").focus();";
 				echo "reserve.booking('','','select');";
 			} else {
@@ -64,22 +64,29 @@
 			echo $out;
 			echo "</script>";
 		break;
-		case "reserve_submit":
+		case "reserve_submit":	//예약완료
 			$out = "";
 			if($sdate && $edate && $room_cnt != 0 && $room_type && $reserve_name && $phone && $password) {
 				//객실수량 다시한번 체크//reserve function 하나 파서 객실수량 체크 해야될듯 넘 자주함
 				$room_chk = $reserve->room_check($room_cnt, $room_type, $sdate, $edate);
 				if($room_chk["mode"] == "SUCC") {
-					$_data = array("room_type", "room_cnt", "reserve_name", "phone", "password", "sdate", "edate");
+					$_data = array("room_type", "room_cnt", "reserve_name", "phone", "password", "sdate", "edate", "price");
 					$data = array();
 					for($ac=0; $ac<count($_data); $ac++) {
-						$data[$_data[$ac]] = ${$_data[$ac]};
+						if($_data[$ac] == "price") {
+							$data[$_data[$ac]] = $room_chk["price"];
+						} else {
+							$data[$_data[$ac]] = ${$_data[$ac]};
+						}
 					}
 					$res = $reserve->room_insert($data);
 					if($res) {
 						$out = "alert('예약처리 되었습니다.');";
-						//$out .= "$(\"input[name='mode']\").val(\"price\");";
-						$out .= "location.reload();";
+						$out .= "$(\"input[name='mode']\").val(\"price\");";
+						$out .= "$(\"form[name='book_form']\").attr('action', '/hotel/mypage.php');";
+						$out .= "$(\"form[name='book_form']\").attr('method', 'POST');";
+						$out .= "$(\"form[name='book_form']\").submit();";
+						$out .= "";
 					} else {
 						$out = "alert('잠시 후 다시 시도해주세요.');";
 					}
@@ -91,13 +98,14 @@
 			echo $out;
 			echo "</script>";
 		break;
-		case "reserve_check":
+		case "reserve_check":	//mypage 예약확인
 			$out = "";
 
 			$qry = "select * from reserve where 1=1 ";
 			$qry .= " and reserve_name = '".$reserve_name."'";
 			$qry .= " and phone = '".$phone."'";
 			$qry .= " and password = '".$password."'";
+			$qry .= " order by num desc";
 			$res = mysqli_query($dbconn, $qry);
 			$cnt = @mysqli_num_rows($res);
 			if($cnt > 0) {
@@ -105,30 +113,57 @@
 					$rqry = "select * from room where num = '".$row["room_type"]."'";
 					$rres = mysqli_query($dbconn, $rqry);
 					$rrow = mysqli_fetch_array($rres);
+					$css = "";
 
 					switch($row["state"]) {
-						case "":
+						case "Y"://예약시도
+							$state = "예약확인";
+						break;
+						case "P":
+							$state = "결제완료";
+						break;
+						case "S":
+							$state = "예약확정";
+						break;
+						case "C":
+							$state = "예약최소";
+							$css .= " sold_out";
+						break;
 						default:
+						case "T":
 							$state = "확인하기";
 						break;
 					}
+					$price = ($row["price"] == "") ? 0 : @number_format($row["price"]);
+					$sdate = new DateTime($row["sdate"]);
+					$edate = new DateTime($row["edate"]);
+					$night = date_diff($sdate, $edate);
+					$night = $night->format("%d");
+					$cnt = ($row["room_cnt"] > 1) ? " ( ".@number_format($row["room_cnt"])."개 )" : "";
 
 					$out .= "
 					<div class=\"col-lg-3 col-sm-6\">
                         <div class=\"accomodation_item text-center\">
                             <div class=\"hotel_img\">
                                 <img src=\"".$rrow['img']."\" alt=\"\">
-                                <a href=\"\" class=\"btn theme_btn button_hover\">".$state."</a>
+                                <a href=\"javascript:;\" class=\"btn theme_btn button_hover".$css."\">".$state."</a>
                             </div>
-                            <a href=\"#\"><h4 class=\"sec_h4\">".$rrow["name"]."</h4></a>
-                            <h5>".won." <small>/night</small></h5>
-                            <h6>".date("Y-m-d", strtotime($row["sdate"]))."</h6>
+                            <a href=\"#\"><h4 class=\"sec_h4\">".$rrow["name"]."".$cnt."</h4></a>
+                            <h5>".won." ".$price." <small>/ ".$night." night</small></h5>
+                            <h6>".date("Y-m-d", strtotime($row["sdate"]))." ~ ".date("Y-m-d", strtotime($row["edate"]))."</h6>
                         </div>
                     </div>
 					";
 				}
-				echo $out;
+			} else {
+				$out = "
+					<div class=\"col-lg-12\">
+                        <div class=\"accomodation_item text-center\">
+                            <h5>일치하는 예약건이 없습니다</h5>
+                        </div>
+                    </div>";
 			}
+			echo $out;
 		break;
 	}
 ?>
