@@ -97,3 +97,16 @@
         </section>
         <!--================Breadcrumb Area =================-->
         <?php } ?>
+        <script type="text/javascript">
+        <?php
+            switch ($page) {
+                case "":
+                    echo "var page = \"index\";";
+                break;
+                case 'reserve':
+                case 'mypage':
+                    echo "var page = \"".$page."\";";
+                break;
+            }
+        ?>
+        </script>

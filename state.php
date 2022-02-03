@@ -125,10 +125,19 @@
 						break;
 						case "S":
 							$state = "예약확정";
-							if(date("Y-m-d", strtotime($row["edate"])) > date("Y-m-d")) {
-								$state = "리뷰작성";
-								$css = " success";
-								$link = "javascript:;";
+							if(date("Y-m-d", strtotime($row["edate"])) < date("Y-m-d")) {
+								$review_qry = "select * from review where reserve_num = '".$row["num"]."'";
+								$review_res = mysqli_query($dbconn, $review_qry);
+								$review_cnt = @mysqli_num_rows($review_res);
+								if($review_cnt > 0) {
+									$state = "리뷰완료";
+									$css = " sold_out";
+									$link = "javascript:;";
+								} else {
+									$state = "리뷰작성";
+									$css = " success";
+									$link = "javascript:reserve.review_div('".$row["num"]."');";
+								}
 							}
 						break;
 						case "C":
@@ -212,6 +221,25 @@
 						$out .= "alert('구독완료');";
 					}
 				}
+			}
+			$out .= "</script>";
+			echo $out;
+		break;
+		case "review_write":
+			$message = addslashes($message);
+			$in_qry = "insert into review (reserve_num, contents, wdate, userip) values ";
+			$in_qry .= "('".$review_num."', '".$message."', now(), '".$_SERVER["REMOTE_ADDR"]."')";
+			$in_res = mysqli_query($dbconn, $in_qry);
+			//"test"
+			$out = "";
+			$out .= "<script type=\"text/javascript\">";
+			if($in_res) {
+				$out .= "alert('작성완료');";
+				$out .= "reserve.booking_form('reserve', 'reserve_check');";
+				$out .= "$(\"textarea[name='message']\").val('');";
+				$out .= "reserve.review_div('0');";
+			} else {
+				$out .= "alert('잠시 후 다시 시도해주세요.')";
 			}
 			$out .= "</script>";
 			echo $out;

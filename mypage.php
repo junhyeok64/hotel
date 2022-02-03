@@ -62,6 +62,9 @@
                 </div>
             </div>
         </section>
+        <?php
+            include "./reserve/review_form.php";
+        ?>
         
 <?php
     include "./common/footer.php";
@@ -75,3 +78,13 @@
 <?php
    }
 ?>
+<script type="text/javascript">
+    $(".pop-open").click(function(){
+      $("#pop").show();
+      $("#Mask").show();
+    });
+    $("#pop .close").click(function(){
+      $("#pop").hide();
+      $("#Mask").hide();
+    });
+</script>

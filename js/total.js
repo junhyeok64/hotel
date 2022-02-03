@@ -102,10 +102,38 @@ var reserve = {
 			$("input[name='re']").val("Y");
 			reserve.booking_form('newsletter', 'html');
 		}
+	},
+	review_div : function(num) {
+		if($("#review_pop").hasClass("on")) {
+			$("#review_pop").hide();
+      		$("#Mask").hide();
+      		$("#review_pop").removeClass("on");
+		} else {
+			$("#review_pop").show();
+      		$("#Mask").show();
+      		$("#review_pop").addClass("on");
+		}
+		$("input[name='review_num']").val(num);
 	}
 }
 $(document).ready(function(){
   $("input:text[numberOnly]").on("keyup", function() {
       $(this).val($(this).val().replace(/[^0-9]/g,""));
   });
-})
+});
+$("input[name='password']").keyup(function(e){
+    if(e.keyCode == 13) {
+    	switch(page) {
+    		case "index":
+    		case "reserve":
+    			reserve.booking();
+    		break;
+    		case "mypage":
+    			reserve.booking_form('reserve', 'reserve_check');
+    		break;
+    	}
+    }
+});
+$("#review_pop .close").click(function(){
+	reserve.review_div('0');
+});
