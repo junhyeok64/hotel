@@ -116,7 +116,7 @@
 					$css = $link = "";
 					$link = "javascript:;";
 
-					switch($row["state"]) {
+					switch($row["state"]) {//'Y','S','C','T'
 						case "Y"://예약시도
 							$state = "예약확인";
 						break;
