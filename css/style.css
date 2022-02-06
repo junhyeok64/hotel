@@ -3689,3 +3689,9 @@ h1, h2, h3, h4, h5, h6 {
     width:auto;
   }
 }
+.star_div {
+  padding:20px 0; font-size:30px;
+}
+.star_div a {
+  color:#f3c300;
+}

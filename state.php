@@ -120,8 +120,8 @@
 						case "Y"://예약시도
 							$state = "예약확인";
 						break;
-						case "P":
-							$state = "결제완료";
+						case "E":
+							$state = "투숙완료";
 						break;
 						case "S":
 							$state = "예약확정";
@@ -227,8 +227,8 @@
 		break;
 		case "review_write":
 			$message = addslashes($message);
-			$in_qry = "insert into review (reserve_num, contents, wdate, userip) values ";
-			$in_qry .= "('".$review_num."', '".$message."', now(), '".$_SERVER["REMOTE_ADDR"]."')";
+			$in_qry = "insert into review (reserve_num, star, contents, wdate, userip) values ";
+			$in_qry .= "('".$review_num."', '".$star."', '".$message."', now(), '".$_SERVER["REMOTE_ADDR"]."')";
 			$in_res = mysqli_query($dbconn, $in_qry);
 			//"test"
 			$out = "";
